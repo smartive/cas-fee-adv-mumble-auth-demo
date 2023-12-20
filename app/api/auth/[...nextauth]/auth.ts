@@ -33,11 +33,11 @@ export const {
 
       return token;
     },
-    session({ session, token }) {
-      session.accessToken = token.accessToken;
-      session.user = token.user;
-      return session;
-    },
   },
-  secret: 'this-is-very-secret',
+  secret:
+    process.env.NEXTAUTH_SECRET ??
+    (function () {
+      console.warn('NO NEXT AUTH SECRET SET!!!');
+      return 'this-is-very-secret';
+    })(),
 });
