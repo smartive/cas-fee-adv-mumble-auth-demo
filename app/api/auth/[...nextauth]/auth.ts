@@ -33,6 +33,11 @@ export const {
 
       return token;
     },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      session.user = token.user;
+      return session;
+    },
   },
   secret:
     process.env.NEXTAUTH_SECRET ??
