@@ -1,5 +1,8 @@
+'use server';
+
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { PaginatedResult, Post } from './types';
+import { cookies, headers } from 'next/headers';
 
 const apiUrl = 'https://mumble-api-prod-4cxdci3drq-oa.a.run.app';
 
@@ -8,11 +11,19 @@ function authHeader(accessToken?: string): HeadersInit {
 }
 
 export async function getPostList() {
-  const session = await auth();
+  const req = {
+    headers: Object.fromEntries(headers() as Headers),
+    cookies: Object.fromEntries(
+      cookies()
+        .getAll()
+        .map((c) => [c.name, c.value])
+    ),
+  };
 
+  const token = await auth(req as any);
   const res = await fetch(`${apiUrl}/posts`, {
     headers: {
-      ...authHeader(session?.accessToken),
+      ...authHeader(token?.accessToken),
     },
   });
   const posts = (await res.json()) as PaginatedResult<Post>;
@@ -34,16 +45,4 @@ export async function createPost(text: string) {
 
   const post = (await res.json()) as Post;
   return post;
-}
-
-export enum PostEvents {
-  created = 'postCreated',
-  updated = 'postUpdated',
-  deleted = 'postDeleted',
-  liked = 'postLiked',
-  unliked = 'postUnliked',
-}
-
-export function getPostEventSource() {
-  return new EventSource(`${apiUrl}/posts/_sse`);
 }

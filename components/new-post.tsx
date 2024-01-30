@@ -9,6 +9,7 @@ export default function NewPost() {
       return;
     }
 
+
     const text = data.get('text') as string;
     await createPost(text);
   }

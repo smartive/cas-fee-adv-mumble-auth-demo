@@ -1,9 +1,9 @@
 'use client';
 
-import { PostEvents, getPostEventSource } from '@/mumble/api';
 import { Post as ApiPost } from '@/mumble/types';
 import { useEffect, useState } from 'react';
 import Post from './post';
+import { PostEvents, getPostEventSource } from '@/mumble/foo';
 
 export default function LivePosts() {
   const [posts, setPosts] = useState<ApiPost[]>([]);

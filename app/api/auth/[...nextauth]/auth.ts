@@ -33,12 +33,11 @@ export const {
 
       return token;
     },
-    async session({ session, token }) {
-      session.accessToken = token.accessToken;
-      session.user = token.user;
-      return session;
-    },
   },
+//   session: {
+//     strategy: 'jwt',  // <-- make sure to use jwt here
+//     maxAge: 30 * 24 * 60 * 60,
+// },
   secret:
     process.env.NEXTAUTH_SECRET ??
     (function () {
