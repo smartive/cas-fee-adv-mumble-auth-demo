@@ -20,6 +20,9 @@ export const {
       },
     }),
   ],
+  session: {
+    maxAge: 12*60*60, // 12 hours
+  },
   callbacks: {
     async jwt({ token, user, account }) {
       if (account) {
