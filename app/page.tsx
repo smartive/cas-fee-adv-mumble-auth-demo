@@ -5,6 +5,8 @@ import NewPost from '@/components/new-post';
 import Post from '@/components/post';
 import { getPostList } from '@/mumble/api';
 import { auth } from './api/auth/[...nextauth]/auth';
+import { NextRequest, NextResponse } from 'next/server';
+import FooPost from '@/components/foo-post';
 
 export default async function Home() {
   const session = await auth();
@@ -31,6 +33,7 @@ export default async function Home() {
           </div>
         </div>
       )}
+      <FooPost />
       {session && (
         <div>
           <h2>Create a post</h2>
