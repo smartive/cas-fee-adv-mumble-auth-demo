@@ -1,20 +1,21 @@
-import LivePosts from '@/components/live-posts';
-import LoginButton from '@/components/login-button';
-import LogoutButton from '@/components/logout-button';
-import NewPost from '@/components/new-post';
-import Post from '@/components/post';
-import { getPostList } from '@/mumble/api';
-import { auth } from './api/auth/[...nextauth]/auth';
+import LivePosts from "@/components/live-posts";
+import LoginButton from "@/components/login-button";
+import LogoutButton from "@/components/logout-button";
+import NewPost from "@/components/new-post";
+import Post from "@/components/post";
+import { getSession } from "@/lib/auth";
+import { getPostList } from "@/mumble/api";
 
 export default async function Home() {
-  const session = await auth();
+  const session = await getSession();
+  console.log("Session in page.tsx:", session);
   const posts = await getPostList();
 
   return (
     <main>
       <h1>Hello In Mumble</h1>
       <p>This is a short demo for using the API with authentication.</p>
-      {!!session ? (
+      {session?.user ? (
         <div>
           <p>
             You are logged in as {session.user?.name} ({session.user?.email}).
@@ -31,7 +32,7 @@ export default async function Home() {
           </div>
         </div>
       )}
-      {session && (
+      {session?.user && (
         <div>
           <h2>Create a post</h2>
           <NewPost />

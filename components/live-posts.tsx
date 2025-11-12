@@ -1,9 +1,17 @@
 'use client';
 
-import { PostEvents, getPostEventSource } from '@/mumble/api';
-import { Post as ApiPost } from '@/mumble/types';
+import { Post as ApiPost, PostEvents } from "@/mumble/types";
 import { useEffect, useState } from 'react';
 import Post from './post';
+
+function getPostEventSource() {
+  return new EventSource(
+    `${
+      process.env.API_URL ||
+      "https://qwacker-api-http-prod-927407260649.europe-west6.run.app"
+    }/posts/_sse`
+  );
+}
 
 export default function LivePosts() {
   const [posts, setPosts] = useState<ApiPost[]>([]);

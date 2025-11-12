@@ -1,18 +1,22 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import { PaginatedResult, Post } from './types';
+"use server";
 
-const apiUrl = 'https://mumble-api-prod-4cxdci3drq-oa.a.run.app';
+import { getAccessToken } from "@/lib/auth";
+import { PaginatedResult, Post } from "./types";
+
+const apiUrl =
+  process.env.API_URL ||
+  "https://qwacker-api-http-prod-927407260649.europe-west6.run.app";
 
 function authHeader(accessToken?: string): HeadersInit {
   return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 }
 
 export async function getPostList() {
-  const session = await auth();
+  const accessToken = await getAccessToken();
 
   const res = await fetch(`${apiUrl}/posts`, {
     headers: {
-      ...authHeader(session?.accessToken),
+      ...authHeader(accessToken?.accessToken),
     },
   });
   const posts = (await res.json()) as PaginatedResult<Post>;
@@ -20,30 +24,18 @@ export async function getPostList() {
 }
 
 export async function createPost(text: string) {
-  const session = await auth();
+  const accessToken = await getAccessToken();
   const body = new FormData();
-  body.append('text', text);
+  body.append("text", text);
 
   const res = await fetch(`${apiUrl}/posts`, {
-    method: 'POST',
+    method: "POST",
     body,
     headers: {
-      ...authHeader(session?.accessToken),
+      ...authHeader(accessToken?.accessToken),
     },
   });
 
   const post = (await res.json()) as Post;
   return post;
-}
-
-export enum PostEvents {
-  created = 'postCreated',
-  updated = 'postUpdated',
-  deleted = 'postDeleted',
-  liked = 'postLiked',
-  unliked = 'postUnliked',
-}
-
-export function getPostEventSource() {
-  return new EventSource(`${apiUrl}/posts/_sse`);
 }

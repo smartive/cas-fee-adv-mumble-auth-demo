@@ -23,3 +23,11 @@ type PostBase = {
 export type Post = PostBase & {
   replies: number;
 };
+
+export enum PostEvents {
+  created = "postCreated",
+  updated = "postUpdated",
+  deleted = "postDeleted",
+  liked = "postLiked",
+  unliked = "postUnliked",
+}
