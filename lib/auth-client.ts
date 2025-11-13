@@ -1,0 +1,23 @@
+import { createAuthClient } from "better-auth/client";
+import { genericOAuthClient } from "better-auth/client/plugins";
+
+export const baseURL =
+  process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : `http://localhost:${process.env.PORT || 3000}`;
+
+export const CUSTOM_PROVIDER_ID = "zitadel";
+
+export const authClient = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_NEXTAUTH_URL ?? "http://localhost:3000",
+  plugins: [genericOAuthClient()],
+});
+
+export const { signIn, signOut, useSession } = authClient;
+
+export const signinZitadel = async () => {
+  await authClient.signIn.oauth2({
+    providerId: "zitadel",
+    callbackURL: "/",
+  });
+};

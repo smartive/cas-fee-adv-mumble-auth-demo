@@ -5,7 +5,7 @@ export default function NewPost() {
     'use server';
 
     if (!data.has('text')) {
-      console.log('No text or access token');
+      console.log("No text provided");
       return;
     }
 
