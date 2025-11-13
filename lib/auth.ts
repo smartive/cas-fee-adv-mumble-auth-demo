@@ -74,11 +74,3 @@ export const getAccessToken = cache(async () => {
   return token;
 });
 
-export async function signOutAction() {
-  "use server";
-  const { revalidatePath } = await import("next/cache");
-  await auth.api.signOut({
-    headers: await headers(),
-  });
-  revalidatePath("/", "layout");
-}
