@@ -8,7 +8,6 @@ import { getPostList } from "@/mumble/api";
 
 export default async function Home() {
   const session = await getSession();
-  console.log("Session in page.tsx:", session);
   const posts = await getPostList();
 
   return (

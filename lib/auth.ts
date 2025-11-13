@@ -39,7 +39,7 @@ export const auth = betterAuth({
       ],
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET ?? "this-is-very-secret",
+  secret: process.env.AUTH_SECRET ?? "this-is-very-secret",
   advanced: {
     useSecureCookies: process.env.NODE_ENV === "production",
     cookiePrefix: "better-auth",
