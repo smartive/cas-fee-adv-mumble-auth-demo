@@ -16,7 +16,7 @@ export const authClient = createAuthClient({
 export const { signIn, signOut, useSession } = authClient;
 
 export const signinZitadel = async () => {
-  await authClient.signIn.oauth2({
+  await signIn.oauth2({
     providerId: "zitadel",
     callbackURL: "/",
   });
