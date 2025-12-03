@@ -8,7 +8,7 @@ function getPostEventSource() {
   return new EventSource(
     `${
       process.env.API_URL ||
-      "https://qwacker-api-http-prod-927407260649.europe-west6.run.app"
+      "https://mumble-api-prod-714602723919.europe-west6.run.app"
     }/posts/_sse`
   );
 }

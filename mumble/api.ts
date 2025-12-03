@@ -5,7 +5,7 @@ import { PaginatedResult, Post } from "./types";
 
 const apiUrl =
   process.env.API_URL ||
-  "https://qwacker-api-http-prod-927407260649.europe-west6.run.app";
+  "https://mumble-api-prod-714602723919.europe-west6.run.app";
 
 function authHeader(accessToken?: string): HeadersInit {
   return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
